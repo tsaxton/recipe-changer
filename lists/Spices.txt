@@ -415,10 +415,10 @@ Wasabi Powder
 White Chicken Chili Mix				
 Worcestershire Powder				
 Xanthan Gum				
-"Almond, Imitation"				
-"Almond Extract, Pure"				
+Almond, Imitation				
+Almond Extract, Pure				
 Amaretto				
-"Anise Extract, Pure"				
+Anise Extract, Pure				
 Apple				
 Banana				
 Blackberry				
@@ -447,25 +447,25 @@ Eggnog
 Hazelnut				
 Irish Cream				
 Key Lime				
-"Lemon Extract, Pure"				
+Lemon Extract, Pure				
 Lime Twist				
 Mango				
 Maple				
-"Orange Extract, Pure"				
+Orange Extract, Pure				
 Passion Fruit				
 Peach				
-"Peppermint Extract, Pure"				
+Peppermint Extract, Pure				
 Pistachio				
 Pineapple				
 Pumpkin Spice				
-"Raspberry, Red"				
-"Raspberry, Black"				
+Raspberry, Red				
+Raspberry, Black				
 Root Beer				
 Rum				
 Strawberry				
 Wild Strawberry				
 Vanilla Butter & Nut				
-"Vanilla Extract, Pure"				
-"Vanilla Extract, Imitation"				
-"Vanilla Extract, White (Clear)"				
+Vanilla Extract, Pure				
+Vanilla Extract, Imitation				
+Vanilla Extract, White (Clear)				
 Watermelon				
