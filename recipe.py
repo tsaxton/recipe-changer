@@ -2,9 +2,17 @@ import BeautifulSoup as bs
 import urllib2
 import lists
 import string
+import nltk
+import re
+import nltk
+from nltk.tokenize import RegexpTokenizer
+from nltk import bigrams, trigrams
+import math
 
 class recipe:
     ingredients = []
+    steps = []
+    tools = []
 
     def __init__(self, url):
         self.url = url
@@ -62,5 +70,22 @@ class recipe:
         directions = directions.find('ol')
         steps = directions('li')
         for step in steps:
-        	print step.find('span').string
+        	self.steps.append(step.find('span').string)
+        return self.steps
 
+    def getTools(self):
+        if len(self.steps) == 0:
+        	self.getSteps()
+        for s in self.steps:
+        	tokens = nltk.word_tokenize(s)
+        	bigram = bigrams(tokens)
+        	for t in tokens:
+        		t = t.strip().lower()
+        		if t in lists.tools:
+        			self.tools.append(t)
+        	for t in bigram:
+        		t = t[0] + " " + t[1]
+        		t = t.strip().lower()
+        		if t in lists.tools:
+        			self.tools.append(t)
+        return self.tools
