@@ -56,3 +56,11 @@ class recipe:
         	i += 1
         return self.ingredients
 
+    def getSteps(self):
+        soup = bs.BeautifulSoup(self.html)
+        directions = soup.find('div', {'class': 'directions'})
+        directions = directions.find('ol')
+        steps = directions('li')
+        for step in steps:
+        	print step.find('span').string
+
