@@ -30,6 +30,8 @@ class recipe:
             tries to find quantity, measurement, and descriptors
             INPUTS: recipe object
             OUTPUTS: dictionary of ingredients and their attributes '''
+        if len(self.ingredients) > 0:
+        	return self.ingredients # already got ingredients, just need to return them
         soup = bs.BeautifulSoup(self.html)
         ingredients = soup('li', {'id': 'liIngredient'}) # find the ingredient list
         i = 0
@@ -77,6 +79,8 @@ class recipe:
         ''' Parses the HTML for the recipe site and gets the recipe steps as defined there
             INPUTS: recipe object
             OUTPUTS: list of steps'''
+        if len(self.steps) > 0:
+        	return self.steps # already got steps, just need to return them
         soup = bs.BeautifulSoup(self.html)
         directions = soup.find('div', {'class': 'directions'}) # tries to find the area directions are in
         directions = directions.find('ol') # the steps are in an ordered list
@@ -90,6 +94,8 @@ class recipe:
             mentioned in the steps
             INPUTS: recipe object
             OUTPUTS: list of tools'''
+        if len(self.tools) > 0:
+        	return self.tools # already got the tools, just need to return them
         if len(self.steps) == 0:
         	self.getSteps()
         for s in self.steps:
@@ -120,7 +126,6 @@ class recipe:
 		#		if (Answer == 'y' or 'Y' ):
 		#		    Category = raw_input("Should this be added to:\n(t) tools\n(s) spices\n(p) proteins?")
 		#	self.tools.append(add)
-        return self.tools
     
 def RePunc(strang):
     words =str(strang)
