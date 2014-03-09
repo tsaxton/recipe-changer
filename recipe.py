@@ -1,4 +1,4 @@
-import BeautifulSoup as bs
+import bs4 as bs
 import urllib2
 import lists
 import string
@@ -88,4 +88,36 @@ class recipe:
         		t = t.strip().lower()
         		if t in lists.tools:
         			self.tools.append(t)
+		#### This section is for making the program able to add previously unseen ingredients to its growing library
+		#for x in range(len(tokens)):
+		#    if (tokens[x] == "a"):
+		#	add = (tokens[x+1:x+4])
+		#	add = bigrams(add)
+		#	for t in add:
+		#	    t = t[0] + " " + t[1]
+		#	    t = t.strip().lower()
+		#	    t = RePunc(t)
+		#	    if t not in lists.tools:
+		#		print "Unrecognized input: ", t
+		#		Answer = raw_input("Should this be added to a list (Y/N)? \n")
+		#		if (Answer == 'y' or 'Y' ):
+		#		    Category = raw_input("Should this be added to:\n(t) tools\n(s) spices\n(p) proteins?")
+		#	self.tools.append(add)
         return self.tools
+    
+def RePunc(strang):
+    words =str(strang)
+    words = words.translate(None, ',')
+    words = words.translate(None, '"')
+    words = words.translate(None, '.')
+    words = words.translate(None, '...')
+    words = words.translate(None, '?')
+    words = words.translate(None, '!')
+    words = words.translate(None, ';')
+    words = words.translate(None, '-')
+    words = words.translate(None, '\'')
+    words = words.translate(None, '.\'')
+    words = words.translate(None, '(')
+    words = words.translate(None, ')')
+    words = words.translate(None, ':')
+    return(words)
