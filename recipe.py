@@ -11,6 +11,7 @@ from nltk import bigrams, trigrams
 import math
 
 class recipe:
+    learningMode = True
     ingredients = []
     steps = []
     tools = []
@@ -136,7 +137,7 @@ class recipe:
                             if t == j:
                                 new = 1
                                 self.tools.append(t)
-                        if new == 0:
+                        if new == 0 and self.learningMode:
                              print "Unrecognized input: ", t
                              Answer = raw_input("Should this be added to the universal equipment bank (Y/N)? \n")
                              if (Answer == 'y' or Answer == 'Y' ):
