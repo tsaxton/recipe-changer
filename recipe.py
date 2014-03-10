@@ -112,26 +112,36 @@ class recipe:
         if len(self.steps) == 0:
             self.getSteps()
         for s in self.steps:
-		### This section is for making the program able to add previously unseen ingredients to its growing library
-		for x in range(len(tokens)):
-		    if (tokens[x] == "a"):
-			add = (tokens[x+1:x+4])
-			add = bigrams(add)
-			for t in add:
-			    t = t[0] + " " + t[1]
-			    t = t.strip().lower()
-			    t = RePunc(t)
-			    new = 0
-			    for j in listcompiler.equipment:
-				if t == j:
-				    new = 1
-				    self.tools.append(add)
-			    if new == 0:
-                                print "Unrecognized input: ", t
-				Answer = raw_input("Should this be added to the universal equipment bank (Y/N)? \n")
-				if (Answer == 'y' or Answer == 'Y' ):
-				    listcompiler.addtolist('lists/equipment.csv', t)
-				    self.tools.append(add)
+            tokens = nltk.word_tokenize(s) # tokenize the steps into words
+            bigram = bigrams(tokens) # and bigrams too, since some tools are two words
+            for t in tokens: # now making list of tools
+            	t = t.strip().lower()
+            	if t in lists.tools:
+            		self.tools.append(t)
+            for t in bigram:
+            	t = t[0].strip().lower() + " " + t[1].strip().lower()
+            	if t in lists.tools:
+            		self.tools.append(t)
+            # This section is for making the program able to add previously unseen ingredients to its growing library
+            for x in range(len(tokens)):
+                if (tokens[x] == "a"):
+                    add = (tokens[x+1:x+4])
+                    add = bigrams(add)
+                    for t in add:
+                        t = t[0] + " " + t[1]
+                        t = t.strip().lower()
+                        t = RePunc(t)
+                        new = 0
+                        for j in listcompiler.equipment:
+                            if t == j:
+                                new = 1
+                                self.tools.append(t)
+                        if new == 0:
+                             print "Unrecognized input: ", t
+                             Answer = raw_input("Should this be added to the universal equipment bank (Y/N)? \n")
+                             if (Answer == 'y' or Answer == 'Y' ):
+                                 listcompiler.addtolist('lists/equipment.csv', t)
+                                 self.tools.append(t)
         self.tools = list(set(self.tools))
         return self.tools # return list of tools
 
