@@ -119,6 +119,8 @@ class recipe:
             	t = t.strip().lower()
             	if t in lists.tools:
             		self.tools.append(t)
+            	if t in lists.impliedTools.keys():
+            		self.tools.append(lists.impliedTools[t])
             for t in bigram:
             	t = t[0].strip().lower() + " " + t[1].strip().lower()
             	if t in lists.tools:
