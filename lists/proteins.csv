@@ -1,100 +1,109 @@
-beef,smoked meats,Alessandri
-ground beef,snails,salami
-sirloin,snake,alpino
-ground sirloin,spam,arles
-ground chuck,sparrow,bangers
-ground round,squab,bologna
-eye of round,squid,beef bologna
-pork,squirrel,turkey sausage
-pork loin,swan,chicken sausage
-pork chops,sweetbreads,drief beef
-chicken,terrapin,beef salami
-boneless skinless chicken breast,tilapia,beerwurst
-abalone,tendon,cheedarwurst
-alligator,tongue,burliner-style sausage
-bacon,tripe,blood sausage
-badger,trout,blood and tongue sausage
-bass,tuna,blutwurst
-balut,turkey,bockwurst
-bison,turtle,chub bologna
-buffalo,uni,ham-style bologna
-capon,veal,boterhamwurst
-cat,venison,Braunschweiger
-chicken,whelk,capacolla
-chucker,wild boar,Cervelat
-clams,wild duck,summer sausage
-cod,wild goose,FARMER CERVELAT
-conch,prime rib,GOETTINGER CERVELAT
-corned beef,rib eye steak,GOTEBORG CERVELAT
-cornish hen,steak,GOTHAER
-crab,brisket,HOLSTEINER CERVELAT
-crawfish,pastrami,LANDJAEGER CERVELAT
-cuttlefish,shank,THURINGER CERVELAT
-deviled meats,ham shank,chorizo
-dog,skirt steak,corned beef
-dove,filet mignon,cotto salami
-dried beef,tenderloin,deviled ham
-duck,ribeye,dutch loaf
-duckling,beauty steak,frankfurters
-eels,market steak,frizzes
-elk,delmonico steak,garlic sausage
-fish,spencer steak,genoa salami
-foie gras,scotch filet,goetta
-frankfurters,new york strip,head cheese
-frog legs,kansas city strip,honey loaf
-gerbil,top sirloin,knackwurst
-goat,top loin,kosher salami
-goose,shell steak,lebanon bologna
-grouse,filet mignon,Linguica
-guinea fowl,t-bone steak,liver cheese
-puinea pig,porterhouse,liver loaf
-gulls,whole chicken,liver sausage
-ham,chicken halves,liverwurst
-hamburger,chicken breast,lola
-hamster,chicken breast quarters,lolita
-hare,breast quarters,luncheon meat
-herring,split breast,lyons sausage
-horsemeat,split chicken breast,mettwurst
-jerky,chicken wings,milano salami
-kangaroo,chicken thighs,minced luncheon specialty
-kidney,chicken drumsticks,mortadella
-kippers,drumsticks,old fashioned loaf
-lamb,ground pork,olive loaf
-liver,fresh pork leg,pastrami
-lobster,pork leg,peppered loaf
-monkey,pork shoulder,pickle and palmento loaf
-moose,loin roast,pork sausage
-mussels,canadian bacon,Proscuitto
-mutton,bacon,Salsiccia
-octopus,sausage,scrapple
-offal,ribs,souse of sulz
-opossum,riblets,smokies
-oysters,baby back ribs,sausage links
-partridge,back ribs,breakfast sausage
-pea fowl,pork belly,tongue
-pemmican,country-style ribs,veal loaf
-periwinkle,crown roast,vienna sausage
-pheasant,pork cutlet,weisswurst
-pigeon,pork rib roast,wiener
-pork,rack of pork,hot dog
-pork roll,spareribs,
-prairie chicken,tenderloin,
-prawns,blade steak,
-ptarmigan,smoked hocks,
-puffin,fresh shanks,
-quail,pork chop,
-rabbit,lamb shoulder,
-raccoon,lamb loin roast,
-rattlesnake,lamb arm chop,
-reindeer,lamb boneless leg,
-rook,lamb blade chop,
-salmon,lamb foreshank,
-salted meats,lamb shank,
-sardines,lamb breast shank,
-sashimi,lamb rib chops,
-sausage,lamb chops,
-scallops,lamb loin,
-scrapple,lamb loin chop,
-seal,italian sausage,
-sharkmeat,bratwurst,
-shrimp,kielbasa,
+beef,smoked meats,Alessandri,
+ground beef,snails,salami,
+sirloin,snake,alpino,
+ground sirloin,spam,arles,
+ground chuck,sparrow,bangers,
+ground round,squab,bologna,
+eye of round,squid,beef bologna,
+pork,squirrel,turkey sausage,
+pork loin,swan,chicken sausage,
+pork chops,sweetbreads,drief beef,
+chicken,terrapin,beef salami,
+boneless skinless chicken breast,tilapia,beerwurst,
+abalone,tendon,cheedarwurst,
+alligator,tongue,burliner-style sausage,
+bacon,tripe,blood sausage,
+badger,trout,blood and tongue sausage,
+bass,tuna,blutwurst,
+balut,turkey,bockwurst,
+bison,turtle,chub bologna,
+buffalo,uni,ham-style bologna,
+capon,veal,boterhamwurst,
+cat,venison,Braunschweiger,
+chicken,whelk,capacolla,
+chucker,wild boar,Cervelat,
+clams,wild duck,summer sausage,
+cod,wild goose,FARMER CERVELAT,
+conch,prime rib,GOETTINGER CERVELAT,
+corned beef,rib eye steak,GOTEBORG CERVELAT,
+cornish hen,steak,GOTHAER,
+crab,brisket,HOLSTEINER CERVELAT,
+crawfish,pastrami,LANDJAEGER CERVELAT,
+cuttlefish,shank,THURINGER CERVELAT,
+deviled meats,ham shank,chorizo,
+dog,skirt steak,corned beef,
+dove,filet mignon,cotto salami,
+dried beef,tenderloin,deviled ham,
+duck,ribeye,dutch loaf,
+duckling,beauty steak,frankfurters,
+eels,market steak,frizzes,
+elk,delmonico steak,garlic sausage,
+fish,spencer steak,genoa salami,
+foie gras,scotch filet,goetta,
+frankfurters,new york strip,head cheese,
+frog legs,kansas city strip,honey loaf,
+gerbil,top sirloin,knackwurst,
+goat,top loin,kosher salami,
+goose,shell steak,lebanon bologna,
+grouse,filet mignon,Linguica,
+guinea fowl,t-bone steak,liver cheese,
+puinea pig,porterhouse,liver loaf,
+gulls,whole chicken,liver sausage,
+ham,chicken halves,liverwurst,
+hamburger,chicken breast,lola,
+hamster,chicken breast quarters,lolita,
+hare,breast quarters,luncheon meat,
+herring,split breast,lyons sausage,
+horsemeat,split chicken breast,mettwurst,
+jerky,chicken wings,milano salami,
+kangaroo,chicken thighs,minced luncheon specialty,
+kidney,chicken drumsticks,mortadella,
+kippers,drumsticks,old fashioned loaf,
+lamb,ground pork,olive loaf,
+liver,fresh pork leg,pastrami,
+lobster,pork leg,peppered loaf,
+monkey,pork shoulder,pickle and palmento loaf,
+moose,loin roast,pork sausage,
+mussels,canadian bacon,Proscuitto,
+mutton,bacon,Salsiccia,
+octopus,sausage,scrapple,
+offal,ribs,souse of sulz,
+opossum,riblets,smokies,
+oysters,baby back ribs,sausage links,
+partridge,back ribs,breakfast sausage,
+pea fowl,pork belly,tongue,
+pemmican,country-style ribs,veal loaf,
+periwinkle,crown roast,vienna sausage,
+pheasant,pork cutlet,weisswurst,
+pigeon,pork rib roast,wiener,
+pork,rack of pork,hot dog,
+pork roll,spareribs,,
+prairie chicken,tenderloin,,
+prawns,blade steak,,
+ptarmigan,smoked hocks,,
+puffin,fresh shanks,,
+quail,pork chop,,
+rabbit,lamb shoulder,,
+raccoon,lamb loin roast,,
+rattlesnake,lamb arm chop,,
+reindeer,lamb boneless leg,,
+rook,lamb blade chop,,
+salmon,lamb foreshank,,
+salted meats,lamb shank,,
+sardines,lamb breast shank,,
+sashimi,lamb rib chops,,
+sausage,lamb chops,,
+scallops,lamb loin,,
+scrapple,lamb loin chop,,
+seal,italian sausage,,
+sharkmeat,bratwurst,,
+shrimp,kielbasa,, 
+penis
+penis
+penis
+penis
+penis
+penis
+penis
+penis
+penis
