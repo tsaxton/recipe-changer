@@ -89,6 +89,18 @@ class recipe:
         	self.steps.append(step.find('span').string) # append the string (the step) to the steps list
         return self.steps # return the steps, which are also saved in the object
 
+    def getPrimaryMethod(self):
+        ''' Uses rudimentary method to determine the primary cooking method and returns it.
+            INPUTS: recipe object
+            OUTPUTS: string containing primary cooking method'''
+	    if len(self.steps) == 0: # if we don't already have the steps loaded, get them
+	    	self.getSteps()
+	    for i in reversed(range(len(self.steps))): # starting from the last step
+	    	for method in lists.primaryCookingMethods: # look for a primary cooking method
+	    		if method in self.steps[i].lower():
+	    			return method # if one is found, return it
+	    return None # if none is found, don't return anything
+
     def getTools(self):
         ''' Reads through the steps and finds tool words in them. Creates a list of the tools
             mentioned in the steps
@@ -110,6 +122,7 @@ class recipe:
         		t = t.strip().lower()
         		if t in lists.tools:
         			self.tools.append(t)
+        self.tools = list(set(self.tools))
         return self.tools # return list of tools
 		#### This section is for making the program able to add previously unseen ingredients to its growing library
 		#for x in range(len(tokens)):
@@ -126,7 +139,7 @@ class recipe:
 		#		if (Answer == 'y' or 'Y' ):
 		#		    Category = raw_input("Should this be added to:\n(t) tools\n(s) spices\n(p) proteins?")
 		#	self.tools.append(add)
-    
+	    
 def RePunc(strang):
     words =str(strang)
     words = words.translate(None, ',')
