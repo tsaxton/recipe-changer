@@ -49,10 +49,18 @@ class recipe:
             elif len(amount) == 2:
                 self.ingredients[i]['quantity'] = amount[0]
                 self.ingredients[i]['measurement'] = amount[1]
+            if self.ingredients[i]['measurement'] in lists.measurementAbbreviations.keys():
+            	self.ingredients[i]['measurement'] = lists.measurementAbbreviations[self.ingredients[i]['measurement']]
             if not self.ingredients[i]['quantity'].isdigit(): # transform 1/2 into .5 and etc. TODO: make it handle things like 1-1/2 or 1 1/2.
-                if len(self.ingredients[i]['quantity'].split('/')) == 2:
+                if len(self.ingredients[i]['quantity'].split(' ')) == 2: # case of 1 1/2 type numbers
+                    continue # filler until figured out what to do here
+                elif len(self.ingredients[i]['quantity'].split('-')) == 2: # case of 1-1/2 type numbers
+                    continue # filler until figured out what to do here
+                elif len(self.ingredients[i]['quantity'].split('/')) == 2: # case of 1/2 type numbers
                     vals = self.ingredients[i]['quantity'].split('/')
                     self.ingredients[i]['quantity'] = float(vals[0])/float(vals[1])
+            else:
+            	self.ingredients[i]['quantity'] = float(self.ingredients[i]['quantity'])
             name = ing.find('span', {'class': 'ingredient-name'}).string # get ingredient name
             name2 = "".join(l for l in name if l not in string.punctuation)
             nameArr = name2.split(' ')
