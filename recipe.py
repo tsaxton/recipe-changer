@@ -9,6 +9,7 @@ import listcompiler
 from nltk.tokenize import RegexpTokenizer
 from nltk import bigrams, trigrams
 import math
+import json
 
 class recipe:
     learningMode = True
@@ -74,6 +75,7 @@ class recipe:
                 if j != len(nameArr2)-1:
                     name += ' '
             self.ingredients[i]['name'] = name # save name
+            self.ingredients[i]['preparation'] = '' # TODO: implement preparation step
             i += 1
         return self.ingredients
 
@@ -147,6 +149,12 @@ class recipe:
                                  self.tools.append(t)
         self.tools = list(set(self.tools))
         return self.tools # return list of tools
+
+    def getJSON(self):
+        ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}
+        ret = json.dumps(ret)
+        print ret
+        return ret
 
 def RePunc(strang):
     words =str(strang)
