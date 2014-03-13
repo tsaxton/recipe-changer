@@ -12,7 +12,7 @@ import math
 import json
 
 class recipe:
-    learningMode = True
+    learningMode = False
     ingredients = []
     steps = []
     tools = []
@@ -40,45 +40,50 @@ class recipe:
         i = 0
         for ing in ingredients:
             self.ingredients.append({})
-            amountStr = ing.find('span', {'class': 'ingredient-amount'}).string # the amount is in its own span
-            amount = amountStr.split(" ")
-            if '(' in amountStr and ')' in amountStr:
-            	openingParen = amountStr.find('(')
-            	closingParen = amountStr.find(')', openingParen)
-            	self.ingredients[i]['descriptor'] = amountStr[openingParen+1:closingParen]
-            	amountStr = amountStr[:openingParen-1] + amountStr[closingParen+1:]
-            	amount = amountStr.split(' ')
-            # split amount into quantity and measurement
-            if len(amount) == 1:
-                self.ingredients[i]['quantity'] = amount[0]
-                self.ingredients[i]['measurement'] = ''
-            elif len(amount) == 2:
-                self.ingredients[i]['quantity'] = amount[0]
-                self.ingredients[i]['measurement'] = amount[1]
-            else:
-            	if "/" in amount[1] and amount[0].isdigit():
-            		self.ingredients[i]['quantity'] = float(amount[0])
-            		vals = amount[1].split('/')
-            		self.ingredients[i]['quantity'] += float(vals[0])/float(vals[1])
-            		self.ingredients[i]['measurement'] = amount[2]
-            	else: # not quite sure what would fall in this case, but gonna try it anyway
-            		self.ingredients[i]['quantity'] = amount[0]
-            		self.ingredients[i]['measurement'] = amount[1] + ' ' + amount[2]
-            if self.ingredients[i]['measurement'] in lists.measurementAbbreviations.keys():
-            	self.ingredients[i]['measurement'] = lists.measurementAbbreviations[self.ingredients[i]['measurement']]
-            if (isinstance(self.ingredients[i]['quantity'], str) or isinstance(self.ingredients[i]['quantity'], unicode)) and not self.ingredients[i]['quantity'].isdigit(): # transform 1/2 into .5 and etc. TODO: make it handle things like 1-1/2 or 1 1/2.
-                if len(self.ingredients[i]['quantity'].split(' ')) == 2: # case of 1 1/2 type numbers
-                    continue # filler until figured out what to do here
-                elif len(self.ingredients[i]['quantity'].split('-')) == 2: # case of 1-1/2 type numbers
-                    continue # filler until figured out what to do here
-                elif len(self.ingredients[i]['quantity'].split('/')) == 2: # case of 1/2 type numbers
-                    vals = self.ingredients[i]['quantity'].split('/')
-                    self.ingredients[i]['quantity'] = float(vals[0])/float(vals[1])
-                else: # case where measurement is unmeasurable, like 'pinch' or 'to taste'
-                	self.ingredients[i]['measurement'] = self.ingredients[i]['quantity'] + ' ' + self.ingredients[i]['measurement']
-                	self.ingredients[i]['quantity'] = ''
-            else:
-            	self.ingredients[i]['quantity'] = float(self.ingredients[i]['quantity'])
+            try:
+                amountStr = ing.find('span', {'class': 'ingredient-amount'}).string # the amount is in its own span
+                amount = amountStr.split(" ")
+                if '(' in amountStr and ')' in amountStr:
+            	    openingParen = amountStr.find('(')
+            	    closingParen = amountStr.find(')', openingParen)
+            	    self.ingredients[i]['descriptor'] = amountStr[openingParen+1:closingParen]
+            	    amountStr = amountStr[:openingParen-1] + amountStr[closingParen+1:]
+            	    amount = amountStr.split(' ')
+                # split amount into quantity and measurement
+                if len(amount) == 1:
+                    self.ingredients[i]['quantity'] = amount[0]
+                    self.ingredients[i]['measurement'] = ''
+                elif len(amount) == 2:
+                    self.ingredients[i]['quantity'] = amount[0]
+                    self.ingredients[i]['measurement'] = amount[1]
+                else:
+            	    if "/" in amount[1] and amount[0].isdigit():
+            		    self.ingredients[i]['quantity'] = float(amount[0])
+            		    vals = amount[1].split('/')
+            		    self.ingredients[i]['quantity'] += float(vals[0])/float(vals[1])
+            		    self.ingredients[i]['measurement'] = amount[2]
+            	    else: # not quite sure what would fall in this case, but gonna try it anyway
+            		    self.ingredients[i]['quantity'] = amount[0]
+            		    self.ingredients[i]['measurement'] = amount[1] + ' ' + amount[2]
+                if self.ingredients[i]['measurement'] in lists.measurementAbbreviations.keys():
+            	    self.ingredients[i]['measurement'] = lists.measurementAbbreviations[self.ingredients[i]['measurement']]
+                if (isinstance(self.ingredients[i]['quantity'], str) or isinstance(self.ingredients[i]['quantity'], unicode)) and not self.ingredients[i]['quantity'].isdigit(): # transform 1/2 into .5 and etc. TODO: make it handle things like 1-1/2 or 1 1/2.
+                    if len(self.ingredients[i]['quantity'].split(' ')) == 2: # case of 1 1/2 type numbers
+                        continue # filler until figured out what to do here
+                    elif len(self.ingredients[i]['quantity'].split('-')) == 2: # case of 1-1/2 type numbers
+                        continue # filler until figured out what to do here
+                    elif len(self.ingredients[i]['quantity'].split('/')) == 2: # case of 1/2 type numbers
+                        vals = self.ingredients[i]['quantity'].split('/')
+                        self.ingredients[i]['quantity'] = float(vals[0])/float(vals[1])
+                    else: # case where measurement is unmeasurable, like 'pinch' or 'to taste'
+                	    self.ingredients[i]['measurement'] = self.ingredients[i]['quantity'] + ' ' + self.ingredients[i]['measurement']
+                	    self.ingredients[i]['quantity'] = ''
+                else:
+            	    self.ingredients[i]['quantity'] = float(self.ingredients[i]['quantity'])
+            except AttributeError:
+                name = ing.find('span', {'class': 'ingredient-name'}).string
+                if 'to taste' in name:
+                	self.ingredients[i]['measurement'] = 'to taste'
             name = ing.find('span', {'class': 'ingredient-name'}).string # get ingredient name
             name2 = "".join(l for l in name if l not in string.punctuation)
             nameArr = name2.split(' ')
@@ -88,8 +93,11 @@ class recipe:
             for word in nameArr:
                 if word in lists.descriptors:
                     descriptors.append(word) # add the descriptor to descriptors
-                if word in lists.preparation:
-                	preparers.append(word)
+                elif word in lists.preparation:
+                	if 'can' in self.ingredients[i]['measurement'] and word in ['diced', 'crushed']:
+                		nameArr2.append(word)
+                	else:
+                	    preparers.append(word)
                 else:
                     nameArr2.append(word)
             if 'descriptor' not in self.ingredients[i].keys():
@@ -110,7 +118,10 @@ class recipe:
                 name += nameArr2[j]
                 if j != len(nameArr2)-1:
                     name += ' '
-            self.ingredients[i]['name'] = name # save name
+            if 'taste' in name:
+                pos = name.find('to taste')
+                name = name[:pos] + name[pos+8:]
+            self.ingredients[i]['name'] = name.strip() # save name
             i += 1
         return self.ingredients
 
