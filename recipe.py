@@ -16,6 +16,7 @@ class recipe:
     ingredients = []
     steps = []
     tools = []
+    originalSteps = []
 
     def __init__(self, url):
         ''' Constructor takes a URL from allrecipes.com and loads it.
@@ -44,11 +45,11 @@ class recipe:
                 amountStr = ing.find('span', {'class': 'ingredient-amount'}).string # the amount is in its own span
                 amount = amountStr.split(" ")
                 if '(' in amountStr and ')' in amountStr:
-            	    openingParen = amountStr.find('(')
-            	    closingParen = amountStr.find(')', openingParen)
-            	    self.ingredients[i]['descriptor'] = amountStr[openingParen+1:closingParen]
-            	    amountStr = amountStr[:openingParen-1] + amountStr[closingParen+1:]
-            	    amount = amountStr.split(' ')
+                    openingParen = amountStr.find('(')
+                    closingParen = amountStr.find(')', openingParen)
+                    self.ingredients[i]['descriptor'] = amountStr[openingParen+1:closingParen]
+                    amountStr = amountStr[:openingParen-1] + amountStr[closingParen+1:]
+                    amount = amountStr.split(' ')
                 # split amount into quantity and measurement
                 if len(amount) == 1:
                     self.ingredients[i]['quantity'] = amount[0]
@@ -57,17 +58,17 @@ class recipe:
                     self.ingredients[i]['quantity'] = amount[0]
                     self.ingredients[i]['measurement'] = amount[1]
                 else:
-            	    if "/" in amount[1] and amount[0].isdigit():
-            		    self.ingredients[i]['quantity'] = float(amount[0])
-            		    vals = amount[1].split('/')
-            		    self.ingredients[i]['quantity'] += float(vals[0])/float(vals[1])
-            		    self.ingredients[i]['measurement'] = amount[2]
-            	    else: # not quite sure what would fall in this case, but gonna try it anyway
-            		    self.ingredients[i]['quantity'] = amount[0]
-            		    self.ingredients[i]['measurement'] = amount[1] + ' ' + amount[2]
+                    if "/" in amount[1] and amount[0].isdigit():
+                        self.ingredients[i]['quantity'] = float(amount[0])
+                        vals = amount[1].split('/')
+                        self.ingredients[i]['quantity'] += float(vals[0])/float(vals[1])
+                        self.ingredients[i]['measurement'] = amount[2]
+                    else: # not quite sure what would fall in this case, but gonna try it anyway
+                        self.ingredients[i]['quantity'] = amount[0]
+                        self.ingredients[i]['measurement'] = amount[1] + ' ' + amount[2]
                 if self.ingredients[i]['measurement'] in lists.measurementAbbreviations.keys():
-            	    self.ingredients[i]['measurement'] = lists.measurementAbbreviations[self.ingredients[i]['measurement']]
-                if (isinstance(self.ingredients[i]['quantity'], str) or isinstance(self.ingredients[i]['quantity'], unicode)) and not self.ingredients[i]['quantity'].isdigit(): # transform 1/2 into .5 and etc. TODO: make it handle things like 1-1/2 or 1 1/2.
+                    self.ingredients[i]['measurement'] = lists.measurementAbbreviations[self.ingredients[i]['measurement']]
+                if (isinstance(self.ingredients[i]['quantity'], str) or isinstance(self.ingredients[i]['quantity'], unicode)) and not self.ingredients[i]['quantity'].isdigit(): 
                     if len(self.ingredients[i]['quantity'].split(' ')) == 2: # case of 1 1/2 type numbers
                         continue # filler until figured out what to do here
                     elif len(self.ingredients[i]['quantity'].split('-')) == 2: # case of 1-1/2 type numbers
@@ -76,14 +77,14 @@ class recipe:
                         vals = self.ingredients[i]['quantity'].split('/')
                         self.ingredients[i]['quantity'] = float(vals[0])/float(vals[1])
                     else: # case where measurement is unmeasurable, like 'pinch' or 'to taste'
-                	    self.ingredients[i]['measurement'] = self.ingredients[i]['quantity'] + ' ' + self.ingredients[i]['measurement']
-                	    self.ingredients[i]['quantity'] = ''
+                        self.ingredients[i]['measurement'] = self.ingredients[i]['quantity'] + ' ' + self.ingredients[i]['measurement']
+                        self.ingredients[i]['quantity'] = ''
                 else:
-            	    self.ingredients[i]['quantity'] = float(self.ingredients[i]['quantity'])
+                    self.ingredients[i]['quantity'] = float(self.ingredients[i]['quantity'])
             except AttributeError:
                 name = ing.find('span', {'class': 'ingredient-name'}).string
                 if 'to taste' in name:
-                	self.ingredients[i]['measurement'] = 'to taste'
+                    self.ingredients[i]['measurement'] = 'to taste'
             name = ing.find('span', {'class': 'ingredient-name'}).string # get ingredient name
             name2 = "".join(l for l in name if l not in string.punctuation)
             nameArr = name2.split(' ')
@@ -94,10 +95,10 @@ class recipe:
                 if word in lists.descriptors:
                     descriptors.append(word) # add the descriptor to descriptors
                 elif word in lists.preparation:
-                	if 'can' in self.ingredients[i]['measurement'] and word in ['diced', 'crushed']:
-                		nameArr2.append(word)
-                	else:
-                	    preparers.append(word)
+                    if 'can' in self.ingredients[i]['measurement'] and word in ['diced', 'crushed']:
+                        nameArr2.append(word)
+                    else:
+                        preparers.append(word)
                 else:
                     nameArr2.append(word)
             if 'descriptor' not in self.ingredients[i].keys():
@@ -109,9 +110,9 @@ class recipe:
                 self.ingredients[i]['descriptor'] = desc # save descriptors
             prep = ''
             for j in range(len(preparers)):
-            	prep += preparers[j]
-            	if j != len(descriptors)-1:
-            		prep += ' '
+                prep += preparers[j]
+                if j != len(descriptors)-1:
+                    prep += ' '
             self.ingredients[i]['preparation'] = prep
             name = ''
             for j in range(len(nameArr2)):
@@ -125,29 +126,71 @@ class recipe:
             i += 1
         return self.ingredients
 
+    def getOriginalSteps(self):
+        ''' Parses the HTML for the recipe site and gets the recipe steps as defined there
+            INPUTS: recipe object
+            OUTPUTS: list of steps as defined in the recipe '''
+        if len(self.originalSteps) > 0:
+            return self.originalSteps
+        soup = bs.BeautifulSoup(self.html)
+        directions = soup.find('div', {'class': 'directions'}) # tries to find the area directions are in
+        directions = directions.find('ol') # the steps are in an ordered list
+        sitesteps = directions('li') # each step is its own list item
+        steps = []
+        for step in sitesteps:
+            steps.append(step.find('span').string) # append the string (the step) to the steps list
+        i = 0
+        self.originalSteps = steps
+        return self.originalSteps
+
     def getSteps(self):
         ''' Parses the HTML for the recipe site and gets the recipe steps as defined there
             INPUTS: recipe object
             OUTPUTS: list of steps'''
         if len(self.steps) > 0:
             return self.steps # already got steps, just need to return them
-        soup = bs.BeautifulSoup(self.html)
-        directions = soup.find('div', {'class': 'directions'}) # tries to find the area directions are in
-        directions = directions.find('ol') # the steps are in an ordered list
-        steps = directions('li') # each step is its own list item
-        for step in steps:
-            self.steps.append(step.find('span').string) # append the string (the step) to the steps list
+        if len(self.originalSteps) == 0:
+            self.getOriginalSteps()
+        if len(self.tools) == 0:
+            self.getTools()
+        if len(self.ingredients) == 0:
+            self.getIngredients()
+
+        i = 0
+        for step in self.originalSteps:
+            sentences = step.split('.')
+            for sentence in sentences:
+            	if sentence == '':
+            		continue
+            	print sentence
+                self.steps.append({})
+                self.steps[i]['tools'] = []
+                self.steps[i]['ingredients'] = []
+                self.steps[i]['action'] = []
+                words = sentence.split()
+                for word in words:
+                    if word in lists.tools or word in self.tools:
+                        self.steps[i]['tools'].append(word)
+                    for ingredient in self.ingredients:
+                        if word in ingredient['name'].split():
+                            self.steps[i]['ingredients'].append(ingredient['name'])
+                    if word in lists.assumedIngredients:
+                    	self.steps[i]['ingredients'].append(word)
+                    if word in lists.actions:
+                        self.steps[i]['action'].append(word)
+                self.steps[i]['ingredients'] = list(set(self.steps[i]['ingredients']))
+                i += 1
         return self.steps # return the steps, which are also saved in the object
 
     def getPrimaryMethod(self):
         ''' Uses rudimentary method to determine the primary cooking method and returns it.
             INPUTS: recipe object
             OUTPUTS: string containing primary cooking method'''
-        if len(self.steps) == 0: # if we don't already have the steps loaded, get them
-            self.getSteps()
-        for i in reversed(range(len(self.steps))): # starting from the last step
+        if len(self.originalSteps) == 0: # if we don't already have the steps loaded, get them
+            self.getOriginalSteps()
+        for i in reversed(range(len(self.originalSteps))): # starting from the last step
             for method in lists.primaryCookingMethods: # look for a primary cooking method
-                if method in self.steps[i].lower():
+                if method in self.originalSteps[i].lower():
                     return method # if one is found, return it
         return None # if none is found, don't return anything
 
@@ -158,21 +201,21 @@ class recipe:
             OUTPUTS: list of tools'''
         if len(self.tools) > 0:
             return self.tools # already got the tools, just need to return them
-        if len(self.steps) == 0:
-            self.getSteps()
-        for s in self.steps:
+        if len(self.originalSteps) == 0:
+            self.getOriginalSteps()
+        for s in self.originalSteps:
             tokens = nltk.word_tokenize(s) # tokenize the steps into words
             bigram = bigrams(tokens) # and bigrams too, since some tools are two words
             for t in tokens: # now making list of tools
-            	t = t.strip().lower()
-            	if t in lists.tools:
-            		self.tools.append(t)
-            	if t in lists.impliedTools.keys():
-            		self.tools.append(lists.impliedTools[t])
+                t = t.strip().lower()
+                if t in lists.tools:
+                    self.tools.append(t)
+                if t in lists.impliedTools.keys():
+                    self.tools.append(lists.impliedTools[t])
             for t in bigram:
-            	t = t[0].strip().lower() + " " + t[1].strip().lower()
-            	if t in lists.tools:
-            		self.tools.append(t)
+                t = t[0].strip().lower() + " " + t[1].strip().lower()
+                if t in lists.tools:
+                    self.tools.append(t)
             # This section is for making the program able to add previously unseen ingredients to its growing library
             for x in range(len(tokens)):
                 if (tokens[x] == "a"):
