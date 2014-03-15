@@ -81,9 +81,9 @@ class recipe:
                         self.ingredients[i]['quantity'] = ''
                 else:
                     self.ingredients[i]['quantity'] = float(self.ingredients[i]['quantity'])
-            except AttributeError:
+            except AttributeError: # to taste is not considered a measurement by allrecipes.com, so we can get an error if there is no measurement. This exception catched that and tries to figure out a quantity
                 name = ing.find('span', {'class': 'ingredient-name'}).string
-                if 'to taste' in name:
+                if 'to taste' in name: # if to taste is in the name, make the measurement to taste
                     self.ingredients[i]['measurement'] = 'to taste'
             name = ing.find('span', {'class': 'ingredient-name'}).string # get ingredient name
             name2 = "".join(l for l in name if l not in string.punctuation)
@@ -95,7 +95,7 @@ class recipe:
                 if word in lists.descriptors:
                     descriptors.append(word) # add the descriptor to descriptors
                 elif word in lists.preparation:
-                    if 'can' in self.ingredients[i]['measurement'] and word in ['diced', 'crushed']:
+                    if 'can' in self.ingredients[i]['measurement'] and word in ['diced', 'crushed']: # funky little thing to deal with canned crushed and diced things
                         nameArr2.append(word)
                     else:
                         preparers.append(word)
@@ -103,23 +103,19 @@ class recipe:
                     nameArr2.append(word)
             if 'descriptor' not in self.ingredients[i].keys():
                 desc = '' # convert descriptors from array to string
-                for j in range(len(descriptors)):
-                    desc += descriptors[j]
-                    if j != len(descriptors)-1:
-                        desc += ' '
-                self.ingredients[i]['descriptor'] = desc # save descriptors
+                for j in range(len(descriptors)): # construct descriptors string from array
+                    desc += descriptors[j] + ' '
+                self.ingredients[i]['descriptor'] = desc.strip() # save descriptors
             prep = ''
-            for j in range(len(preparers)):
-                prep += preparers[j]
-                if j != len(descriptors)-1:
-                    prep += ' '
-            self.ingredients[i]['preparation'] = prep
+            for j in range(len(preparers)): # construct preparation string from array
+                prep += preparers[j] + ' '
+            self.ingredients[i]['preparation'] = prep.strip() # save preparation
             name = ''
-            for j in range(len(nameArr2)):
-                name += nameArr2[j]
-                if j != len(nameArr2)-1:
-                    name += ' '
-            if 'taste' in name:
+            if ('and' in nameArr2 and len(nameArr2)==2) or (len(nameArr2)==3 and 'and' in nameArr2 and nameArr2[1]!='and'):
+            	nameArr2.remove('and') # make sure there are no extraneous ands from the descriptors
+            for j in range(len(nameArr2)): # construct name string from array
+                name += nameArr2[j] + ' '
+            if 'taste' in name: # deals with the case where ingredient is to taste
                 pos = name.find('to taste')
                 name = name[:pos] + name[pos+8:]
             self.ingredients[i]['name'] = name.strip() # save name
@@ -157,18 +153,23 @@ class recipe:
             self.getIngredients()
 
         i = 0
+        dontClear = False
         for step in self.originalSteps:
             sentences = step.split('.')
             for sentence in sentences:
             	if sentence == '':
             		continue
-            	print sentence
-                self.steps.append({})
-                self.steps[i]['tools'] = []
-                self.steps[i]['ingredients'] = []
-                self.steps[i]['action'] = []
+            	if dontClear != True:
+                    self.steps.append({})
+                    self.steps[i]['tools'] = []
+                    self.steps[i]['ingredients'] = []
+                    self.steps[i]['action'] = []
+                dontClear = False
                 words = sentence.split()
-                for word in words:
+                time = ''
+                for j in range(len(words)):
+                    word = words[j]
+                    word = word.lower()
                     if word in lists.tools or word in self.tools:
                         self.steps[i]['tools'].append(word)
                     for ingredient in self.ingredients:
@@ -178,8 +179,33 @@ class recipe:
                     	self.steps[i]['ingredients'].append(word)
                     if word in lists.actions:
                         self.steps[i]['action'].append(word)
+                    if word in lists.time:
+                    	if j>=2 and words[j-2]=='to':
+                    		time += words[j-3] + ' to ' + words[j-1] + ' ' + word + ' '
+                    	else:
+                    		time += words[j-1] + ' ' + word + ' '
+                    if word == "until":
+                    	if j+1 < len(words):
+                    		time += 'until ' + words[j+1] + ' '
+
                 self.steps[i]['ingredients'] = list(set(self.steps[i]['ingredients']))
-                i += 1
+                self.steps[i]['time'] = time.strip()
+                if len(self.steps[i]['ingredients']) == 0 and i>0:
+                	self.steps[i]['ingredients'] = self.steps[i-1]['ingredients'] # probably the previous list of ingredients applies still
+                if len(self.steps[i]['tools']) == 0 and i>0:
+                	self.steps[i]['tools'] = self.steps[i-1]['tools'] # probably the previous tools apply here
+                if len(self.steps[i]['ingredients']) == 0 and i==0:
+                	dontClear = True
+                	continue # probably a silly instruction that we can't figure out, so just leave it out and hope the next step helps
+                if len(self.steps[i]['action']) != 0: # if there is an action, advance to the next step; if there's no action, let's ignore this step and try the next sentence
+                	i += 1
+        i = 0
+        while i < len(self.steps):
+        	step = self.steps[i]
+        	if len(step) == 0:
+        		self.steps.remove(step)
+        	else:
+        		i += 1
         return self.steps # return the steps, which are also saved in the object
 
     def getPrimaryMethod(self):
