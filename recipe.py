@@ -112,7 +112,7 @@ class recipe:
             self.ingredients[i]['preparation'] = prep.strip() # save preparation
             name = ''
             if ('and' in nameArr2 and len(nameArr2)==2) or (len(nameArr2)==3 and 'and' in nameArr2 and nameArr2[1]!='and'):
-            	nameArr2.remove('and') # make sure there are no extraneous ands from the descriptors
+                nameArr2.remove('and') # make sure there are no extraneous ands from the descriptors
             for j in range(len(nameArr2)): # construct name string from array
                 name += nameArr2[j] + ' '
             if 'taste' in name: # deals with the case where ingredient is to taste
@@ -157,9 +157,9 @@ class recipe:
         for step in self.originalSteps:
             sentences = step.split('.')
             for sentence in sentences:
-            	if sentence == '':
-            		continue
-            	if dontClear != True:
+                if sentence == '':
+                    continue
+                if dontClear != True:
                     self.steps.append({})
                     self.steps[i]['tools'] = []
                     self.steps[i]['ingredients'] = []
@@ -176,36 +176,36 @@ class recipe:
                         if word in ingredient['name'].split():
                             self.steps[i]['ingredients'].append(ingredient['name'])
                     if word in lists.assumedIngredients:
-                    	self.steps[i]['ingredients'].append(word)
+                        self.steps[i]['ingredients'].append(word)
                     if word in lists.actions:
                         self.steps[i]['action'].append(word)
                     if word in lists.time:
-                    	if j>=2 and words[j-2]=='to':
-                    		time += words[j-3] + ' to ' + words[j-1] + ' ' + word + ' '
-                    	else:
-                    		time += words[j-1] + ' ' + word + ' '
+                        if j>=2 and words[j-2]=='to':
+                            time += words[j-3] + ' to ' + words[j-1] + ' ' + word + ' '
+                        else:
+                            time += words[j-1] + ' ' + word + ' '
                     if word == "until":
-                    	if j+1 < len(words):
-                    		time += 'until ' + words[j+1] + ' '
+                        if j+1 < len(words):
+                            time += 'until ' + words[j+1] + ' '
 
                 self.steps[i]['ingredients'] = list(set(self.steps[i]['ingredients']))
                 self.steps[i]['time'] = time.strip()
                 if len(self.steps[i]['ingredients']) == 0 and i>0:
-                	self.steps[i]['ingredients'] = self.steps[i-1]['ingredients'] # probably the previous list of ingredients applies still
+                    self.steps[i]['ingredients'] = self.steps[i-1]['ingredients'] # probably the previous list of ingredients applies still
                 if len(self.steps[i]['tools']) == 0 and i>0:
-                	self.steps[i]['tools'] = self.steps[i-1]['tools'] # probably the previous tools apply here
+                    self.steps[i]['tools'] = self.steps[i-1]['tools'] # probably the previous tools apply here
                 if len(self.steps[i]['ingredients']) == 0 and i==0:
-                	dontClear = True
-                	continue # probably a silly instruction that we can't figure out, so just leave it out and hope the next step helps
+                    dontClear = True
+                    continue # probably a silly instruction that we can't figure out, so just leave it out and hope the next step helps
                 if len(self.steps[i]['action']) != 0: # if there is an action, advance to the next step; if there's no action, let's ignore this step and try the next sentence
-                	i += 1
+                    i += 1
         i = 0
         while i < len(self.steps):
-        	step = self.steps[i]
-        	if len(step) == 0:
-        		self.steps.remove(step)
-        	else:
-        		i += 1
+            step = self.steps[i]
+            if len(step) == 0:
+                self.steps.remove(step)
+            else:
+                i += 1
         return self.steps # return the steps, which are also saved in the object
 
     def getPrimaryMethod(self):
@@ -286,7 +286,7 @@ class recipe:
                 if word in ingredient["name"]:
                     ethnicity["mexican"] += 1
 
-       return max(ethnicity)
+        return max(ethnicity)
 
     def getJSON(self):
         ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}
