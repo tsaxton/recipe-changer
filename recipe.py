@@ -265,6 +265,29 @@ class recipe:
         self.tools = list(set(self.tools))
         return self.tools # return list of tools
 
+    def getCuisineType (self):
+        #vote on cusine by looking at how ingredients fall under a particular cuisine
+        ethnicity = {"american":0, "italian":0, "asian":0, "mexican":0}
+
+        if len(self.ingredients) == 0:
+            self.getIngredients()
+
+        for ingredient in self.ingredients:
+            for word in lists.american:
+                if word in ingredient["name"]:
+                    ethnicity["american"] += 1
+            for word in lists.italian:
+                if word in ingredient["name"]:
+                    ethnicity["italian"] += 1
+            for word in lists.asian:
+                if word in ingredient["name"]:
+                    ethinicity["asian"] += 1
+            for word in lists.mexican:
+                if word in ingredient["name"]:
+                    ethnicity["mexican"] += 1
+
+       return max(ethnicity)
+
     def getJSON(self):
         ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}
         ret = json.dumps(ret)
@@ -287,3 +310,4 @@ def RePunc(strang):
     words = words.translate(None, ')')
     words = words.translate(None, ':')
     return(words)
+
