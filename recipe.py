@@ -10,6 +10,7 @@ from nltk.tokenize import RegexpTokenizer
 from nltk import bigrams, trigrams
 import math
 import json
+import operator
 
 class recipe:
     learningMode = False
@@ -274,19 +275,23 @@ class recipe:
 
         for ingredient in self.ingredients:
             for word in lists.american:
-                if word in ingredient["name"]:
+                if word.lower() in ingredient["name"].lower():
+                    print 'american'
                     ethnicity["american"] += 1
             for word in lists.italian:
-                if word in ingredient["name"]:
+                if word.lower() in ingredient["name"].lower():
+                    print 'italian'
                     ethnicity["italian"] += 1
             for word in lists.asian:
-                if word in ingredient["name"]:
-                    ethinicity["asian"] += 1
+                if word.lower() in ingredient["name"].lower():
+                    print 'asian'
+                    ethnicity["asian"] += 1
             for word in lists.mexican:
-                if word in ingredient["name"]:
+                if word.lower() in ingredient["name"].lower():
+                    print 'mexican'
                     ethnicity["mexican"] += 1
 
-        return max(ethnicity)
+        return max(ethnicity.iteritems(), key=operator.itemgetter(1))[0]
 
     def getJSON(self):
         ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}
