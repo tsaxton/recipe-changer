@@ -3,7 +3,7 @@ import pprint
 import sys
 import vegetarian
 import cuisinetype
-import healthy
+#import healthy
 
 url = sys.argv[1]
 a = recipe.recipe(url)

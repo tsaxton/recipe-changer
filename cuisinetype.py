@@ -25,7 +25,7 @@ def getCuisineSpecificIngredients (recipe):
 
 	for ingredient in recipe.ingredients:
 		for item in inglist:
-			if item in ingredient['name']:
+			if item.lower().strip() in ingredient['name'].lower().strip():
 			    removelist.append(ingredient)
 			    break
 
