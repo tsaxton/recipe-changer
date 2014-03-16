@@ -19,14 +19,15 @@ def getCuisineSpecificIngredients (recipe):
 	elif cuisinetype == "italian":
 		inglist = lists.italian
 	elif cuisinetype == "mexican":
-		inglist = lists. mexican
+		inglist = lists.mexican
 
 	removelist = []
 
 	for ingredient in recipe.ingredients:
 		for item in inglist:
-			removelist.append(ingredient)
-			break
+			if item in ingredient['name']:
+			    removelist.append(ingredient)
+			    break
 
 	for ingredient in removelist:
 		recipe.ingredients.remove(ingredient)
