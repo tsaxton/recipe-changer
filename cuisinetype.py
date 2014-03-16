@@ -3,29 +3,30 @@ import lists
 
 #main function
 def changetype (recipe):
-	recipe, removelist = getCusineSpecificIngredients(recipe)
+	recipe, removelist = getCuisineSpecificIngredients(recipe)
 	print recipe.ingredients, removelist
 	
 
 
 #a function that pulls out cuisine specific ingredients
-def getCusineSpecificIngredients (recipe):
-	cusinetype = recipe.GetCusineType()
+def getCuisineSpecificIngredients (recipe):
+	cuisinetype = recipe.getCuisineType()
 
-	if cusinetype == "american":
-		list = lists.american
-	elif cusinetype == "asian":
-		list = lists.asian
-	elif cusinetype == "italian":
-		list = lists.italian
-	elif cusinetype == "mexican":
-		list = lists. mexican
+	if cuisinetype == "american":
+		inglist = lists.american
+	elif cuisinetype == "asian":
+		inglist = lists.asian
+	elif cuisinetype == "italian":
+		inglist = lists.italian
+	elif cuisinetype == "mexican":
+		inglist = lists. mexican
 
 	removelist = []
 
-	for ingredient in ingredients:
-		for item in list:
+	for ingredient in recipe.ingredients:
+		for item in inglist:
 			removelist.append(ingredient)
+			break
 
 	for ingredient in removelist:
 		recipe.ingredients.remove(ingredient)
