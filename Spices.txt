@@ -1,59 +1,67 @@
-Name			Type	
-Allspice	Pimento		Berry	
-Anise Seed			Seed	
-Annatto Seed			Seed	
-Balm	Lemon Balm		Leaf	
-Basil Leaves	Sweet		Leaf	
-Bay Leaves	Laurel Leaves		Leaf	
-Black Caraway	Russian Caraway Black Cumin		Seed	
-Black Pepper			Berry	
-Capsicums			Fruit	
-Caraway Seed			Seed	
-Cardamom			Fruit	
-Cassia	Cinnamon		Bark	
-Celery Seed			Seed	
-Chervil			Leaf	
-Chives			Leaf	
-Cilantro	Coriander Leaf		Leaf	
-Cloves			Bud	
-Coriander Seed			Seed	
-Cumin Seed	Cummin		Seed	
-Dill Seed			Seed	
-Dill Weed			Leaf	
-English Camomile	Roman Camomile		Flower	
-Fennel Seed			Seed	
-Fenugreek Seed			Seed	
-Galangal			Root	
-Garlic Powder			Bulb	
-German Camomile	Hungarian Camomile		Flower	
-Ginger			Root	
-Green Peppercorns			Berry	
-Horseradish			Root	
-Juniper			Berry	
-Lavender			Flower	
-Mace			Aril	
-Marjoram Leaves			Leaf	
-Mustard Seed			Seed	
-Nutmeg			Seed	
-Onion Powder			Bulb	
-Oregano Leaves			Leaf	
-Paprika			Fruit	
-Parsley	Dehydrated Parsley	Parsley Flakes	Leaf	
-Peppermint Leaves	Peppermint Flakes		Leaf	
-Pink Peppercorns			Berry	
-Poppy Seed			Seed	
-Rosemary Leaves			Leaf	
-Saffron			Stigma	
-Sage Leaves			Leaf	
-Savory Leaves			Leaf	
-Sesame Seed1			Seed	
-Spearmint Leaves	Spearmint Flakes		Leaf	
-Star Anise			Fruit	
-Tarragon Leaves			Leaf	
-Thyme Leaves			Leaf	
-Turmeric			Root	
-Vanilla Bean			Fruit	
-White Pepper			Berry	
+Allspice
+Pimento		
+Anise Seed			
+Annatto Seed			
+Balm	Lemon Balm	
+Basil Leaves
+Bay Leaves	Laurel Leaves		
+Black Caraway
+Russian Caraway 
+Black Cumin		
+Black Pepper			
+Capsicums			
+Caraway Seed	
+Cardamom	
+Cassia	Cinnamon
+Celery Seed	
+Chervil	
+Chives
+Cilantro
+Coriander Leaf
+Cloves			
+Coriander Seed
+Cumin Seed	Cummin
+Dill Seed		
+Dill Weed	
+English Camomile	
+Roman Camomile
+Fennel Seed			
+Fenugreek Seed	
+Galangal	
+Garlic Powder	
+German Camomile	
+Hungarian Camomile
+Ginger			
+Green Peppercorns
+Horseradish		
+Juniper		
+Lavender
+Mace
+Marjoram Leaves
+Mustard Seed
+Nutmeg	
+Onion Powder
+Oregano Leaves
+Paprika		
+Parsley	Dehydrated Parsley	
+Parsley Flakes
+Peppermint Leaves	
+Peppermint Flakes	
+Pink Peppercorns			
+Poppy Seed			
+Rosemary Leaves	
+Saffron		
+Sage Leaves	
+Savory Leaves
+Sesame Seed	
+Spearmint Leaves
+Spearmint Flakes
+Star Anise			
+Tarragon Leaves	
+Thyme Leaves
+Turmeric
+Vanilla Bean
+White Pepper
 Adobe criollo				
 Amchur				
 Angelica				
