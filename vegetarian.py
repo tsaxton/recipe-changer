@@ -15,7 +15,7 @@ def tovegetarian(recipe):
 		recipe.ingredients.remove(meat)
 
 
-	type = recipe.getCusineType()
+	type = recipe.getCuisineType()
 
 	if type == "american":
 		recipe.ingredients.append({'name':'mushroom'})
