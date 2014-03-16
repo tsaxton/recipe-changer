@@ -10,7 +10,7 @@ if len(sys.argv) == 2:
     	line2 = line.strip().split(',')
     	for l in line2:
     		if l != '':
-    		    arr += '"' + l.lower() + '", '
+    		    arr += '"' + l.lower().strip() + '", '
     arr = arr[0:-2] + ']'
     print arr
 else:
