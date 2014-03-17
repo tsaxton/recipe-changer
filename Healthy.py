@@ -6,7 +6,6 @@ import lists
 
 def tohealthy(recipe):
 	#identify protein (to remove or substitute)
-	meats = []
 	for i in range(len(recipe.ingredients)):
             ingredient = recipe.ingredients[i]
 	    for ingredients in lists.healthy:
