@@ -17,14 +17,20 @@ def tovegetarian(recipe):
 
 	type = recipe.getCuisineType()
 
-	if type == "american":
-		recipe.ingredients.append({'name':'mushroom'})
-	elif type == "italian":
-		recipe.ingredients.append({'name':'eggplant'})
-	elif type == "asian":
-		recipe.ingredients.append({'name':'tofu'})
-	elif type == "mexican":
-		recipe.ingredients.append({'name':'peppers'})
+	for meat in meats:
+	    liquid = False
+	    for liquid in lists.liquids:
+	    	liquid = True
+	    if liquid == True:
+	    	recipe.ingredients.append({'name': 'vegetable broth', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': ''})
+	    elif type == "american":
+		    recipe.ingredients.append({'name':'mushroom', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': meat['preparation']})
+	    elif type == "italian":
+		    recipe.ingredients.append({'name':'eggplant', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': meat['preparation']})
+	    elif type == "asian":
+		    recipe.ingredients.append({'name':'tofu', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': meat['preparation']})
+	    elif type == "mexican":
+		    recipe.ingredients.append({'name':'peppers', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': 'chopped'})
 
 
 
