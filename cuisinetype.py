@@ -36,10 +36,70 @@ def getCuisineSpecificIngredients (recipe):
 
 
 #a funtion to convert TO AMERICAN
+def toAmerican (recipe, removelist):
+	for ingredient in removelist:
+		for item in list.equivalencies:
+			if item["asian"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["american"])
+				break
+			if item["italian"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["american"])
+				break
+			if item["mexican"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["american"])
+				break
 
+	return recipe
+				
 #a function to convert TO ASIAN
+def toAsian (recipe, removelist):
+	for ingredient in removelist:
+		for item in list.equivalencies:
+			if item["american"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["asian"]})
+				break
+			if item["italian"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["asian"]})
+				break
+			if item["mexican"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["asian"]})
+				break
+
+	return recipe
+				
+
 
 #a function to convert TO ITALIAN
+def toItalian (recipe, removelist):
+	for ingredient in removelist:
+		for item in list.equivalencies:
+			if item["asian"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["italian"]})
+				break
+			if item["american"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["italian"]})
+				break
+			if item["mexican"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["italian"]})
+				break
+
+	return recipe
+
 
 #a function to conver TO MEXICAN
+def toMexican (recipe, removelist):
+	for ingredient in removelist:
+		for item in list.equivalencies:
+			if item["american"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["mexican"]})
+				break
+			if item["italian"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["mexican"]})
+				break
+			if item["asian"] in ingredient["name"]:
+				recipe.ingredients.append({"name":item["mexican"]})
+				break
+
+	return recipe
+
 
