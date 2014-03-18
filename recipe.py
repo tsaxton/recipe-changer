@@ -18,6 +18,7 @@ class recipe:
     steps = []
     tools = []
     originalSteps = []
+    primarymethod = ""
 
     def __init__(self, url):
         ''' Constructor takes a URL from allrecipes.com and loads it.
@@ -213,6 +214,8 @@ class recipe:
         ''' Uses rudimentary method to determine the primary cooking method and returns it.
             INPUTS: recipe object
             OUTPUTS: string containing primary cooking method'''
+	if self.primarymethod != "":
+	    return self.primarymethod
         if len(self.originalSteps) == 0: # if we don't already have the steps loaded, get them
             self.getOriginalSteps()
         for i in reversed(range(len(self.originalSteps))): # starting from the last step

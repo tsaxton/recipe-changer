@@ -16,7 +16,8 @@ def tohealthy(recipe):
 		    recipe.steps[i]["time"] = "15-25 minutes or until cooked through"
                     recipe.steps[i]["tools"] = ["baking pan"]
 		    recipe.steps.insert(0, {"action":"preheat oven to 450", "tools":["Oven"], "ingredients":[], "time":""})
-                    break
+                    recipe.primarymethod = "Bake"
+		    break
         
 	#identify protein (to remove or substitute)
 	for i in range(len(recipe.ingredients)):
@@ -26,6 +27,7 @@ def tohealthy(recipe):
 			recipe.swapStepIngredients(recipe.ingredients[i]["name"],lists.healthy[ingredients])
 			recipe.ingredients[i]["name"] = lists.healthy[ingredients]
 			break
+		#if 
 	## cut down unhealthy ingredient amounts
 	## caramelizing
 	## stir fry no oil
