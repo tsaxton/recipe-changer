@@ -13,6 +13,7 @@ def tohealthy(recipe):
                 if methods in method["action"]:
 		    recipe.swapStepMethod(recipe.steps[i]["action"], lists.healthy[methods])
                     recipe.steps[i]["action"] = lists.healthy[methods]
+		    recipe.steps[i]["time"] = "15-25 minutes or until cooked through"
                     recipe.steps[i]["tools"] = ["baking pan"]
                     break
         
