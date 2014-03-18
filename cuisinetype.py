@@ -39,25 +39,27 @@ def getCuisineSpecificIngredients (recipe):
 #a funtion to convert TO AMERICAN
 def toAmerican (recipe, removelist):
     for ingredient in removelist:
-        print ingredient['name']
         for item in lists.equivalencies:
-            if item["asian"] in ingredient["name"].lower():
+            if item["asian"].lower() in ingredient["name"].lower():
                 if item['asian'] == '':
                     continue
-                print item
-                recipe.ingredients.append({"name":item["american"]})
+                #print "Replacing " + ingredient['name'] + ' with ' + item['american']
+                recipe.ingredients.append({"name":item["american"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['american'])
                 break
-            elif item["italian"] in ingredient["name"].lower():
+            elif item["italian"].lower() in ingredient["name"].lower():
                 if item['italian'] == '':
                     continue
-                print item
-                recipe.ingredients.append({"name":item["american"]})
+                #print "Replacing " + ingredient['name'] + ' with ' + item['american']
+                recipe.ingredients.append({"name":item["american"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['american'])
                 break
-            elif item["mexican"] in ingredient["name"].lower():
+            elif item["mexican"].lower() in ingredient["name"].lower():
                 if item['mexican'] == '':
                     continue
-                print item
-                recipe.ingredients.append({"name":item["american"]})
+                #print "Replacing " + ingredient['name'] + ' with ' + item['american']
+                recipe.ingredients.append({"name":item["american"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['american'])
                 break
 
     return recipe
@@ -65,25 +67,24 @@ def toAmerican (recipe, removelist):
 #a function to convert TO ASIAN
 def toAsian (recipe, removelist):
     for ingredient in removelist:
-        print ingredient['name']
         for item in lists.equivalencies:
-            if item["american"] in ingredient["name"].lower():
+            if item["american"].lower() in ingredient["name"].lower():
                 if item['american'] == '':
                     continue
-                print item
-                recipe.ingredients.append({"name":item["asian"]})
+                recipe.ingredients.append({"name":item["asian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['asian'])
                 break
-            if item["italian"] in ingredient["name"].lower():
+            if item["italian"].lower() in ingredient["name"].lower():
                 if item['italian'] == '':
                     continue
-                print item
-                recipe.ingredients.append({"name":item["asian"]})
+                recipe.ingredients.append({"name":item["asian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['asian'])
                 break
-            if item["mexican"] in ingredient["name"].lower():
+            if item["mexican"].lower() in ingredient["name"].lower():
                 if item['mexican'] == '':
                     continue
-                print item
-                recipe.ingredients.append({"name":item["asian"]})
+                recipe.ingredients.append({"name":item["asian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['asian'])
                 break
 
     return recipe
@@ -94,20 +95,23 @@ def toAsian (recipe, removelist):
 def toItalian (recipe, removelist):
     for ingredient in removelist:
         for item in lists.equivalencies:
-            if item["asian"] in ingredient["name"].lower():
+            if item["asian"].lower() in ingredient["name"].lower():
                 if item['asian'] == '':
                     continue
-                recipe.ingredients.append({"name":item["italian"]})
+                recipe.ingredients.append({"name":item["italian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['italian'])
                 break
-            if item["american"] in ingredient["name"].lower():
+            if item["american"].lower() in ingredient["name"].lower():
                 if item['american'] == '':
                     continue
-                recipe.ingredients.append({"name":item["italian"]})
+                recipe.ingredients.append({"name":item["italian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['italian'])
                 break
-            if item["mexican"] in ingredient["name"].lower():
+            if item["mexican"].lower() in ingredient["name"].lower():
                 if item['mexican'] == '':
                     continue
-                recipe.ingredients.append({"name":item["italian"]})
+                recipe.ingredients.append({"name":item["italian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['italian'])
                 break
 
     return recipe
@@ -117,20 +121,23 @@ def toItalian (recipe, removelist):
 def toMexican (recipe, removelist):
     for ingredient in removelist:
         for item in lists.equivalencies:
-            if item["american"] in ingredient["name"].lower():
+            if item["american"].lower() in ingredient["name"].lower():
                 if item['american'] == '':
                     continue
-                recipe.ingredients.append({"name":item["mexican"]})
+                recipe.ingredients.append({"name":item["mexican"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['mexican'])
                 break
-            if item["italian"] in ingredient["name"].lower():
+            if item["italian"].lower() in ingredient["name"].lower():
                 if item['italian'] == '':
                     continue
-                recipe.ingredients.append({"name":item["mexican"]})
+                recipe.ingredients.append({"name":item["mexican"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['mexican'])
                 break
-            if item["asian"] in ingredient["name"].lower():
+            if item["asian"].lower() in ingredient["name"].lower():
                 if item['asian'] == '':
                     continue
-                recipe.ingredients.append({"name":item["mexican"]})
+                recipe.ingredients.append({"name":item["mexican"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
+                recipe.swapStepIngredients(ingredient['name'], item['mexican'])
                 break
 
     return recipe

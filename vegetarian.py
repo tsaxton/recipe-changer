@@ -40,8 +40,6 @@ def tovegetarian(recipe):
 		    recipe.ingredients.append({'name':'peppers', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': 'chopped'})
 		    recipe.swapStepIngredients(meat['name'], 'peppers')
 
-
-
 	return recipe
 
 
