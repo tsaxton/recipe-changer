@@ -2,9 +2,16 @@ import recipe
 import lists
 
 #main function
-def changetype (recipe):
+def changetype (recipe, desiredType):
     recipe, removelist = getCuisineSpecificIngredients(recipe)
-    recipe = toAmerican(recipe, removelist)
+    if desiredType == 'american':
+        recipe = toAmerican(recipe, removelist)
+    elif desiredType == 'asian':
+        recipe = toAsian(recipe, removelist)
+    elif desiredType == 'mexican':
+        recipe = toMexican(recipe, removelist)
+    elif desiredType == 'italian':
+        recipe = toItalian(recipe, removelist)
     return recipe
     
 

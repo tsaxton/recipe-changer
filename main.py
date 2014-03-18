@@ -22,7 +22,7 @@ a = recipe.recipe(url)
 #print(a.getPrimaryMethod())
 #a.getJSON()
 #print a.getCuisineType()
-recipe = cuisinetype.changetype(a)
+recipe = cuisinetype.changetype(a, 'american')
 pprint.pprint(recipe.ingredients)
 pprint.pprint(recipe.steps)
 
