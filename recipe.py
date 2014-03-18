@@ -229,7 +229,11 @@ class recipe:
         for i in reversed(range(len(self.originalSteps))): # starting from the last step
             for method in lists.primaryCookingMethods: # look for a primary cooking method
                 if method in self.originalSteps[i].lower():
+		    self.primarymethod = method
                     return method # if one is found, return it
+	if "stir" in self.name.lower():
+	    self.primarymethod = "Stir-Fry"
+	    return "Stir-Fry"
         return None # if none is found, don't return anything
 
     def getTools(self):
