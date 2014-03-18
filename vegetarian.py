@@ -11,7 +11,6 @@ def tovegetarian(recipe):
 				break
 	# remove meat from recipe
 	for meat in meats:
-		print meat
 		recipe.ingredients.remove(meat)
 
 
@@ -20,17 +19,26 @@ def tovegetarian(recipe):
 	for meat in meats:
 	    liquid = False
 	    for liquid in lists.liquids:
-	    	liquid = True
+	    	if liquid in meat['name'].lower():
+	    	    #print "Liquid found!"
+	    	    liquid = True
+	    	    break
 	    if liquid == True:
+	    	#print "Liquid substitution"
 	    	recipe.ingredients.append({'name': 'vegetable broth', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': ''})
+	    	recipe.swapStepIngredients(meat['name'], 'vegetable broth')
 	    elif type == "american":
 		    recipe.ingredients.append({'name':'mushroom', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': meat['preparation']})
+		    recipe.swapStepIngredients(meat['name'], 'mushroom')
 	    elif type == "italian":
 		    recipe.ingredients.append({'name':'eggplant', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': meat['preparation']})
+		    recipe.swapStepIngredients(meat['name'], 'eggplant')
 	    elif type == "asian":
 		    recipe.ingredients.append({'name':'tofu', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': meat['preparation']})
+		    recipe.swapStepIngredients(meat['name'], 'tofu')
 	    elif type == "mexican":
 		    recipe.ingredients.append({'name':'peppers', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': 'chopped'})
+		    recipe.swapStepIngredients(meat['name'], 'peppers')
 
 
 

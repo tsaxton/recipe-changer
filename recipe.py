@@ -293,6 +293,15 @@ class recipe:
 
         return max(ethnicity.iteritems(), key=operator.itemgetter(1))[0]
 
+    def swapStepIngredients(self, original, new):
+        for i in range(len(self.steps)):
+        	step = self.steps[i]
+        	for j in range(len(step['ingredients'])):
+        		ingredient = step['ingredients'][j]
+        		if ingredient == original:
+        			self.steps[i]['ingredients'][j] = new
+        return self.steps
+
     def getJSON(self):
         ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}
         ret = json.dumps(ret)
