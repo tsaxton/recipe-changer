@@ -19,6 +19,7 @@ class recipe:
     tools = []
     originalSteps = []
     primarymethod = ""
+    name = ''
 
     def __init__(self, url):
         ''' Constructor takes a URL from allrecipes.com and loads it.
@@ -27,9 +28,16 @@ class recipe:
         
         conn = urllib2.urlopen(url)
         self.html = conn.read()
+        self.getName()
         self.getSteps()
         self.getIngredients()
         self.getTools()
+
+    def getName(self):
+        soup = bs.BeautifulSoup(self.html)
+        name = soup.find('h1', {'id': 'itemTitle'})
+        self.name = name.string
+        return self.name
 
     def getIngredients(self):
         ''' getIngredients parses the ingredients from the page's HTML, then
