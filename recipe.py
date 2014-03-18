@@ -301,7 +301,16 @@ class recipe:
         		if ingredient == original:
         			self.steps[i]['ingredients'][j] = new
         return self.steps
-
+    
+    def swapStepMethod(self, original, new):
+        for i in range(len(self.steps)):
+        	step = self.steps[i]
+        	for j in range(len(step['action'])):
+        		action = step['action'][j]
+        		if action == original:
+        			self.steps[i]['action'][j] = new
+        return self.steps
+    
     def getJSON(self):
         ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}
         ret = json.dumps(ret)

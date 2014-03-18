@@ -11,6 +11,7 @@ def tohealthy(recipe):
             method = recipe.steps[i]
             for methods in lists.healthy:
                 if methods in method["action"]:
+		    recipe.swapStepMethod(recipe.steps[i]["action"], lists.healthy[methods])
                     recipe.steps[i]["action"] = lists.healthy[methods]
                     recipe.steps[i]["tools"] = ["baking pan"]
                     break
