@@ -7,20 +7,20 @@ import lists
 def tohealthy(recipe):
         for i in range(len(recipe.steps)):
             method = recipe.steps[i]
-            for methods in lists.healthy:
-		if method == "stir-fry":
+	    if recipe.getPrimaryMethod() == "Stir-Fry":
 		    for i in range(len(recipe.ingredients)):
 			ingredient = recipe.ingredients[i]
 			if "oil" in ingredient["name"]:
 				recipe.swapStepIngredients(recipe.ingredients[i]["name"], "Vegetable Broth")
 				ingredient["name"] = "Vegetable Broth"
 				ingredient["quantity"] = .5
-				ingredient["measurement"] = cups
+				ingredient["measurement"] = "cups"
 				break
+            for methods in lists.healthymethods:
 			
                 if methods in method["action"]:
-		    recipe.swapStepMethod(recipe.steps[i]["action"], lists.healthy[methods])
-                    recipe.steps[i]["action"] = lists.healthy[methods]
+		    recipe.swapStepMethod(recipe.steps[i]["action"], lists.healthymethods[methods])
+                    recipe.steps[i]["action"] = lists.healthymethods[methods]
 		    recipe.steps[i]["time"] = "15-25 minutes or until cooked through"
                     recipe.steps[i]["tools"] = ["baking pan"]
 		    recipe.steps.insert(0, {"action":"preheat oven to 450", "tools":["Oven"], "ingredients":[], "time":""})
