@@ -50,6 +50,14 @@ def transformRecipe():
         return render_template('displayRecipe.html', url=url, recipe=recipe, transform='', error='There was a problem transforming your recipe. The original recipe is displayed below.')
     return render_template('displayRecipe.html', url=url, recipe=newRecipe, transform=transformation, error='')
 
+@app.route('/transformations')
+def aboutTransformations():
+    return render_template('transformations.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 
 if __name__ == '__main__':
 	    app.run()

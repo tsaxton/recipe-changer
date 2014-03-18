@@ -37,7 +37,7 @@ def tovegetarian(recipe):
 		    recipe.ingredients.append({'name':'tofu', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': meat['preparation']})
 		    recipe.swapStepIngredients(meat['name'], 'tofu')
 	    elif type == "mexican":
-		    recipe.ingredients.append({'name':'peppers', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': 'chopped'})
+		    recipe.ingredients.append({'name':'peppers', 'descriptor': '', 'measurement': meat['measurement'], 'quantity': meat['quantity'], 'preparation': 'chopped sauteed'})
 		    recipe.swapStepIngredients(meat['name'], 'peppers')
 
 	return recipe
