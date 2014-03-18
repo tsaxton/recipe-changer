@@ -25,4 +25,4 @@ RUNNING COMMAND LINE INTERFACE:
 $ python main.py http://www.allrecipes.com/SPECIFIC_RECIPE_URL
 
 PRINTING JSON OUTPUT:
-$ python json.py http://www.allrecipes.com/SPECIFIC_RECIPE_URL
+$ python getJSON.py http://www.allrecipes.com/SPECIFIC_RECIPE_URL

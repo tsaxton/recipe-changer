@@ -4,6 +4,7 @@ import os
 import recipe as recipeClass
 import vegetarian
 import cuisinetype
+import Healthy as healthy
 
 app=Flask(__name__)
 app.config.from_object(__name__)
@@ -22,6 +23,7 @@ def promptUser():
 @app.route('/originalRecipe', methods=['GET','POST'])
 def getOriginalRecipe():
     recipe = None
+    newRecipe = None
     try:
         recipe = recipeClass.recipe(request.form['url'])
     except:
@@ -31,6 +33,7 @@ def getOriginalRecipe():
 @app.route('/transform', methods=['GET', 'POST'])
 def transformRecipe():
     recipe = None
+    newRecipe = None
     url = request.form['url']
     transformation = request.form['transformation']
     try:
@@ -41,7 +44,7 @@ def transformRecipe():
         if transformation=='vegetarian':
             newRecipe = vegetarian.tovegetarian(recipe)
         elif transformation=='healthy':
-            newRecipe = recipe # do this for now until know how to run the healthy transformation
+            newRecipe = healthy.tohealthy(recipe)
         elif transformation=='american' or transformation=='mexican' or transformation=='italian' or transformation=='asian':
             newRecipe = cuisinetype.changetype(recipe, transformation)
         else:

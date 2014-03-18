@@ -235,6 +235,7 @@ class recipe:
             INPUTS: recipe object
             OUTPUTS: list of tools'''
         if len(self.tools) > 0:
+            self.tools = list(set(self.tools))
             return self.tools # already got the tools, just need to return them
         if len(self.originalSteps) == 0:
             self.getOriginalSteps()
