@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h2>{{recipe.name}}</h2>
+	<a href="{{ url }}" target="_blank">Original Recipe on AllRecipes.com</a>
+
+	<h3>Ingredients</h3>
+	<table class="table table-striped">
+		<tr>
+			<th>Ingredient</th>
+			<th>Quantity</th>
+			<th>Measurement</th>
+			<th>Descriptor</th>
+			<th>Preparation</th>
+		</tr>
+	{% for ingredient in recipe.ingredients %}
+		<tr>
+			<th>{{ ingredient['name'] }}</th>
+			<td>{{ ingredient['quantity'] }}</td>
+			<td>{{ ingredient['measurement'] }}</td>
+			<td>{{ ingredient['descriptor'] }}</td>
+			<td>{{ ingredient['preparation'] }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+
+	<h3>Tools</h3>
+	<ul>
+	{% for tool in recipe.tools %}
+		<li>{{ tool }}</li>
+	{% endfor %}
+	</ul>
+
+	<h3>Primary Cooking Method</h3>
+	{{ recipe.getPrimaryMethod() }}
+
+	<h3>Steps</h3>
+	<table class="table table-striped">
+		<tr>
+			<th>Action</th>
+			<th>Ingredients</th>
+			<th>Tools</th>
+			<th>Time</th>
+		</tr>
+	{% for step in recipe.steps %}
+		<tr>
+			<td>
+				<ul>
+				{% for action in step['action'] %}
+					<li>{{ action }}</li>
+				{% endfor %}
+				</ul>
+			</td>
+			<td>
+				<ul>
+				{% for ingredient in step['ingredients'] %}
+					<li>{{ ingredient }}</li>
+				{% endfor %}
+				</ul>
+			</td>
+			<td>
+				<ul>
+				{% for tool in step['tools'] %}
+					<li>{{ tool }}</li>
+				{% endfor %}
+				</ul>
+			</td>
+			<td>{{ step['time'] }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Recipe Transformer</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-theme.css') }}">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container">
+  <h1>Recipe Tranformer</h1>
+  <div class=metanav>
+  </div>
+  {% block body %}{% endblock %}
+</div>
+
+</body>
+</html>

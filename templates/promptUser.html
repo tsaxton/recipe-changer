@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+	{% if error != None %}
+	<div class="alert">
+		{{ error }}
+	</div>
+	{% endif %}
+    <form action="{{ url_for('getOriginalRecipe') }}" method=post class=getOriginalRecipe>
+		<input type="text" size="30" name="url"/>
+        <input type="submit"/>
+    </form>
+{% endblock %}
+
