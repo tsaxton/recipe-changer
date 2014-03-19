@@ -4,6 +4,9 @@
 import recipe
 import lists
 
+## This function will take a recipe and first alter any high oil cooking methods to baking and then replace unhealthy ingredients, with healthy alternatives.
+## After that, some unhealthy ingredients that still remain will have their quantity cut down
+
 def tohealthy(recipe):
     #change unhealthy cooking methods to healthy ones.
         for i in range(len(recipe.steps)):
