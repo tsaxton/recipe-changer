@@ -5,8 +5,10 @@ import recipe
 import lists
 
 def tohealthy(recipe):
+    #change unhealthy cooking methods to healthy ones.
         for i in range(len(recipe.steps)):
             method = recipe.steps[i]
+            #stir-fry the healthy way! with vegetable broth instead of oil
 	    if recipe.getPrimaryMethod() == "Stir-Fry":
 		    for i in range(len(recipe.ingredients)):
 			ingredient = recipe.ingredients[i]
@@ -16,8 +18,8 @@ def tohealthy(recipe):
 				ingredient["quantity"] = .5
 				ingredient["measurement"] = "cups"
 				break
+            #No More Deep Frying!
             for methods in lists.healthymethods:
-			
                 if methods in method["action"]:
 		    recipe.swapStepMethod(recipe.steps[i]["action"], lists.healthymethods[methods])
                     recipe.steps[i]["action"] = lists.healthymethods[methods]
@@ -27,10 +29,11 @@ def tohealthy(recipe):
                     recipe.primarymethod = "Bake"
 		    break
         
-	#identify protein (to remove or substitute)
+	#Remove unhealthy ingredients and replace with healthier alternatives
 	for i in range(len(recipe.ingredients)):
             ingredient = recipe.ingredients[i]
 	    for ingredients in lists.healthy:
+                #The "Cambell's" exceptions
 		if "broth" in ingredient["name"]:
 			break
 		elif "soup" in ingredient["name"]:
@@ -50,7 +53,6 @@ def tohealthy(recipe):
 	## cut down pasta and increase veggies
 	## cut out mayo
 	## salad dressings - blue cheese, marinades
-	## couple table spoons of broth can be used for oil in stir fry
 
 	return recipe
 
