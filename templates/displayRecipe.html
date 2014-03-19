@@ -90,7 +90,10 @@
 				</form>
 				{% else %}
 				<li class="nav-header disabled">Change Recipe</li>
-				<li><a href="javascript:history.go(-1)">Back to Original Recipe</a></li>
+				<form action="{{ url_for('getOriginalRecipe') }}" method="post" class="getOriginalRecipe">
+					<input type="hidden" name="url" value="{{url}}"/>
+					<li><input type="submit" value="Revert Recipe"></li>
+				</form>
 				{% endif %}
 			</ul>
 </div> <!-- End col-md-2 -->

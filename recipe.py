@@ -29,9 +29,17 @@ class recipe:
         conn = urllib2.urlopen(url)
         self.html = conn.read()
         self.getName()
-        self.getSteps()
-        self.getIngredients()
-        self.getTools()
+        self.initSteps()
+        self.initIngredients()
+        self.initTools()
+
+    def resetRecipe(self):
+        del self.ingredients[:]
+        del self.steps[:]
+        del self.tools[:]
+        del self.originalSteps[:]
+        self.primarymethod = ''
+        self.name = ''
 
     def getName(self):
         soup = bs.BeautifulSoup(self.html)
@@ -40,12 +48,16 @@ class recipe:
         return self.name
 
     def getIngredients(self):
+        if len(self.ingredients) == 0:
+        	self.initIngredients()
+        return self.ingredients
+
+    def initIngredients(self):
         ''' getIngredients parses the ingredients from the page's HTML, then
             tries to find quantity, measurement, and descriptors
             INPUTS: recipe object
             OUTPUTS: dictionary of ingredients and their attributes '''
-        if len(self.ingredients) > 0:
-            return self.ingredients # already got ingredients, just need to return them
+        del self.ingredients[:]
         soup = bs.BeautifulSoup(self.html)
         ingredients = soup('li', {'id': 'liIngredient'}) # find the ingredient list
         i = 0
@@ -133,11 +145,14 @@ class recipe:
         return self.ingredients
 
     def getOriginalSteps(self):
+        if len(self.originalSteps) == 0:
+        	self.initOriginalSteps()
+        return self.originalSteps
+
+    def initOriginalSteps(self):
         ''' Parses the HTML for the recipe site and gets the recipe steps as defined there
             INPUTS: recipe object
             OUTPUTS: list of steps as defined in the recipe '''
-        if len(self.originalSteps) > 0:
-            return self.originalSteps
         soup = bs.BeautifulSoup(self.html)
         directions = soup.find('div', {'class': 'directions'}) # tries to find the area directions are in
         directions = directions.find('ol') # the steps are in an ordered list
@@ -150,11 +165,14 @@ class recipe:
         return self.originalSteps
 
     def getSteps(self):
+        if len(self.steps) == 0:
+        	self.initSteps(self)
+        return self.steps
+
+    def initSteps(self):
         ''' Parses the HTML for the recipe site and gets the recipe steps as defined there
             INPUTS: recipe object
             OUTPUTS: list of steps'''
-        if len(self.steps) > 0:
-            return self.steps # already got steps, just need to return them
         if len(self.originalSteps) == 0:
             self.getOriginalSteps()
         if len(self.tools) == 0:
@@ -219,31 +237,37 @@ class recipe:
         return self.steps # return the steps, which are also saved in the object
 
     def getPrimaryMethod(self):
+        if self.primarymethod == "":
+        	self.initPrimaryMethod()
+        return self.primarymethod
+
+    def initPrimaryMethod(self):
         ''' Uses rudimentary method to determine the primary cooking method and returns it.
             INPUTS: recipe object
             OUTPUTS: string containing primary cooking method'''
-	if self.primarymethod != "":
-	    return self.primarymethod
         if len(self.originalSteps) == 0: # if we don't already have the steps loaded, get them
             self.getOriginalSteps()
         for i in reversed(range(len(self.originalSteps))): # starting from the last step
             for method in lists.primaryCookingMethods: # look for a primary cooking method
                 if method in self.originalSteps[i].lower():
-		    self.primarymethod = method
+                    self.primarymethod = method
                     return method # if one is found, return it
-	if "stir" in self.name.lower():
-	    self.primarymethod = "Stir-Fry"
-	    return "Stir-Fry"
+        if "stir" in self.name.lower():
+            self.primarymethod = "Stir-Fry"
+            return "Stir-Fry"
         return None # if none is found, don't return anything
 
     def getTools(self):
+        if len(self.tools) == 0:
+        	self.initTools()
+        self.tools = list(set(self.tools))
+        return self.tools
+
+    def initTools(self):
         ''' Reads through the steps and finds tool words in them. Creates a list of the tools
             mentioned in the steps
             INPUTS: recipe object
             OUTPUTS: list of tools'''
-        if len(self.tools) > 0:
-            self.tools = list(set(self.tools))
-            return self.tools # already got the tools, just need to return them
         if len(self.originalSteps) == 0:
             self.getOriginalSteps()
         for s in self.originalSteps:
@@ -311,20 +335,20 @@ class recipe:
 
     def swapStepIngredients(self, original, new):
         for i in range(len(self.steps)):
-        	step = self.steps[i]
-        	for j in range(len(step['ingredients'])):
-        		ingredient = step['ingredients'][j]
-        		if ingredient == original:
-        			self.steps[i]['ingredients'][j] = new
+            step = self.steps[i]
+            for j in range(len(step['ingredients'])):
+                ingredient = step['ingredients'][j]
+                if ingredient == original:
+                    self.steps[i]['ingredients'][j] = new
         return self.steps
     
     def swapStepMethod(self, original, new):
         for i in range(len(self.steps)):
-        	step = self.steps[i]
-        	for j in range(len(step['action'])):
-        		action = step['action'][j]
-        		if action == original:
-        			self.steps[i]['action'][j] = new
+            step = self.steps[i]
+            for j in range(len(step['action'])):
+                action = step['action'][j]
+                if action == original:
+                    self.steps[i]['action'][j] = new
         return self.steps
     
     def printIngredients(self):
@@ -332,31 +356,31 @@ class recipe:
         template = "{name:30}|{quantity:8}|{measurement:15}|{descriptor:30}|{preparation:30}"
         print template.format(name='Ingredient', quantity='Quantity', measurement='Measurement', descriptor='Descriptor', preparation='Preparation')
         for rec in self.ingredients: 
-        	  print template.format(**rec)
+              print template.format(**rec)
 
     def printSteps(self):
         print "STEPS:"
         template = "{action:20}|{ingredients:75}|{tools:30}|{time:20}"
         print template.format(action="Action(s)", ingredients="Ingredients", tools="Tools", time="Time")
         for rec in self.steps:
-        	act = ''
-        	ing = ''
-        	too = ''
-        	for action in rec['action']:
-        		act += action + ', '
-        	act = act[:-2]
-        	for ingredient in rec['ingredients']:
-        		ing += ingredient + ', '
-        	ing=ing[:-2]
-        	for tool in rec['tools']:
-        		too += tool + ', '
-        	too = too[:-2]
+            act = ''
+            ing = ''
+            too = ''
+            for action in rec['action']:
+                act += action + ', '
+            act = act[:-2]
+            for ingredient in rec['ingredients']:
+                ing += ingredient + ', '
+            ing=ing[:-2]
+            for tool in rec['tools']:
+                too += tool + ', '
+            too = too[:-2]
 
-        	print template.format(action=act, ingredients=ing, tools=too, time=rec['time'])
+            print template.format(action=act, ingredients=ing, tools=too, time=rec['time'])
 
     def printTools(self):
         for tool in self.tools:
-        	print tool
+            print tool
 
     def getJSON(self):
         ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}

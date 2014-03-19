@@ -5,6 +5,7 @@ import recipe as recipeClass
 import vegetarian
 import cuisinetype
 import Healthy as healthy
+import copy
 
 app=Flask(__name__)
 app.config.from_object(__name__)
@@ -22,8 +23,12 @@ def promptUser():
 
 @app.route('/originalRecipe', methods=['GET','POST'])
 def getOriginalRecipe():
-    recipe = None
-    newRecipe = None
+    url = request.form['url']
+    try:
+        recipe = recipeClass.recipe(url)
+        recipe.resetRecipe()
+    except:
+        return render_template('promptUser.html', error='This other error')
     try:
         recipe = recipeClass.recipe(request.form['url'])
     except:
@@ -32,26 +37,30 @@ def getOriginalRecipe():
 
 @app.route('/transform', methods=['GET', 'POST'])
 def transformRecipe():
-    recipe = None
-    newRecipe = None
     url = request.form['url']
     transformation = request.form['transformation']
+    try:
+        recipe = recipeClass.recipe(url)
+        recipe.resetRecipe()
+    except:
+        return render_template('promptUser.html', error='This error')
+        pass
     try:
         recipe = recipeClass.recipe(url)
     except:
         return render_template('promptUser.html', error='There was a problem retrieving the original recipe. Your internet connection may be down.')
     try:
         if transformation=='vegetarian':
-            newRecipe = vegetarian.tovegetarian(recipe)
+            recipe = vegetarian.tovegetarian(recipe)
         elif transformation=='healthy':
-            newRecipe = healthy.tohealthy(recipe)
+            recipe = healthy.tohealthy(recipe)
         elif transformation=='american' or transformation=='mexican' or transformation=='italian' or transformation=='asian':
-            newRecipe = cuisinetype.changetype(recipe, transformation)
+            recipe = cuisinetype.changetype(recipe, transformation)
         else:
         	return render_template('displayRecipe.html', url=url, recipe=recipe, transform='', error='There was a problem transforming your recipe. The original recipe is displayed below.')
     except:
         return render_template('displayRecipe.html', url=url, recipe=recipe, transform='', error='There was a problem transforming your recipe. The original recipe is displayed below.')
-    return render_template('displayRecipe.html', url=url, recipe=newRecipe, transform=transformation, error='')
+    return render_template('displayRecipe.html', url=url, recipe=recipe, transform=transformation, error='')
 
 @app.route('/transformations')
 def aboutTransformations():
