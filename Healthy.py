@@ -33,6 +33,8 @@ def tohealthy(recipe):
 	    for ingredients in lists.healthy:
 		if "broth" in ingredient["name"]:
 			break
+		elif "soup" in ingredient["name"]:
+			break
 			
 		elif ingredients in ingredient["name"]:
 			recipe.swapStepIngredients(recipe.ingredients[i]["name"],lists.healthy[ingredients])
