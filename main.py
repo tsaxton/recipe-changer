@@ -57,7 +57,7 @@ if selection in [1, 2, 3, 4, 5, 6]:
 #a = healthy.tohealthy(a)
 #pprint.pprint(a.getSteps())
 #a = vegetarian.tovegetarian(a)
-#pprint.pprint(a.getIngredients())
+pprint.pprint(a.getIngredients())
 #print a.getCuisineType()
 #pprint.pprint(a.getTools())
 #print(a.getPrimaryMethod())
