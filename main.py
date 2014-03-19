@@ -38,6 +38,7 @@ elif selection == 5:
 elif selection == 6:
     newRecipe = cuisinetype.changetype(a, 'mexican')
 if selection in [1, 2, 3, 4, 5, 6]:
+    # because of a python design decision newRecipe = a. I forgot about that until I made the below mistake, and just am not bothering to change it.
     print "TRANSFORMATION OF RECIPE:"
     print a.getName()
     print "PRIMARY COOKING METHOD:"
@@ -48,22 +49,4 @@ if selection in [1, 2, 3, 4, 5, 6]:
     a.printSteps()
     print "\n\nTOOLS:"
     a.printTools()
-#pprint.pprint(a.getIngredients())
-#pprint.pprint(a.getIngredients())
-#pprint.pprint(a.getSteps())
-#a = vegetarian.tovegetarian(a)
-#print a.getCuisineType()
-#pprint.pprint(a.getIngredients())
-#a = healthy.tohealthy(a)
-#pprint.pprint(a.getSteps())
-#a = vegetarian.tovegetarian(a)
-#pprint.pprint(a.getIngredients())
-#print a.getCuisineType()
-#pprint.pprint(a.getTools())
-#print(a.getPrimaryMethod())
-#a.getJSON()
-#print a.getCuisineType()
-#recipe = cuisinetype.changetype(a, 'american')
-#pprint.pprint(recipe.ingredients)
-#pprint.pprint(recipe.steps)
 
