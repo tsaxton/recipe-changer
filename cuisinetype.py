@@ -3,6 +3,8 @@ import lists
 
 #main function
 def changetype (recipe, desiredType):
+    if desiredType == recipe.getCuisineType():
+    	return recipe
     recipe, removelist = getCuisineSpecificIngredients(recipe)
     if desiredType == 'american':
         recipe = toAmerican(recipe, removelist)
