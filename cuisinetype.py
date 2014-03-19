@@ -80,21 +80,18 @@ def toAsian (recipe, removelist):
             if item["american"].lower() in ingredient["name"].lower():
                 if item['american'] == '':
                     continue
-		print "Replacing " + ingredient['name'] + ' with ' + item['asian']
                 recipe.ingredients.append({"name":item["asian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
                 recipe.swapStepIngredients(ingredient['name'], item['asian'])
                 break
             if item["italian"].lower() in ingredient["name"].lower():
                 if item['italian'] == '':
                     continue
-		print "Replacing " + ingredient['name'] + ' with ' + item['asian']
                 recipe.ingredients.append({"name":item["asian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
                 recipe.swapStepIngredients(ingredient['name'], item['asian'])
                 break
             if item["mexican"].lower() in ingredient["name"].lower():
                 if item['mexican'] == '':
                     continue
-		print "Replacing " + ingredient['name'] + ' with ' + item['asian']
                 recipe.ingredients.append({"name":item["asian"], "descriptor": '', "measurement": ingredient['measurement'], 'preparation': ingredient['preparation'], 'quantity': ingredient['quantity']})
                 recipe.swapStepIngredients(ingredient['name'], item['asian'])
                 break
