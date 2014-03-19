@@ -334,6 +334,8 @@ class recipe:
                 if word.lower() in ingredient["name"].lower():
                     #print 'mexican'
                     ethnicity["mexican"] += 1
+            if 'curry' in ingredient['name'].lower():
+            	return 'asian'
 
         return max(ethnicity.iteritems(), key=operator.itemgetter(1))[0]
 
