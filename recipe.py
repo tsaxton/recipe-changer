@@ -107,6 +107,7 @@ class recipe:
                 name = ing.find('span', {'class': 'ingredient-name'}).string
                 if 'to taste' in name: # if to taste is in the name, make the measurement to taste
                     self.ingredients[i]['measurement'] = 'to taste'
+                    self.ingredients[i]['quantity'] = ''
             name = ing.find('span', {'class': 'ingredient-name'}).string # get ingredient name
             name2 = "".join(l for l in name if l not in string.punctuation)
             nameArr = name2.split(' ')
@@ -225,6 +226,9 @@ class recipe:
                 if len(self.steps[i]['ingredients']) == 0 and i==0:
                     dontClear = True
                     continue # probably a silly instruction that we can't figure out, so just leave it out and hope the next step helps
+                if ('stir' in self.steps[i]['action'] or 'simmer' in self.steps[i]['action']) and i > 0:
+                	self.steps[i]['ingredients'].extend(self.steps[i-1]['ingredients'])
+                	self.steps[i]['ingredients'] = list(set(self.steps[i]['ingredients']))
                 if len(self.steps[i]['action']) != 0: # if there is an action, advance to the next step; if there's no action, let's ignore this step and try the next sentence
                     i += 1
         i = 0
