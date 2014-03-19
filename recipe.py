@@ -320,6 +320,37 @@ class recipe:
         			self.steps[i]['action'][j] = new
         return self.steps
     
+    def printIngredients(self):
+        print "INGREDIENTS:"
+        template = "{name:30}|{quantity:8}|{measurement:15}|{descriptor:30}|{preparation:30}"
+        print template.format(name='Ingredient', quantity='Quantity', measurement='Measurement', descriptor='Descriptor', preparation='Preparation')
+        for rec in self.ingredients: 
+        	  print template.format(**rec)
+
+    def printSteps(self):
+        print "STEPS:"
+        template = "{action:20}|{ingredients:75}|{tools:30}|{time:20}"
+        print template.format(action="Action(s)", ingredients="Ingredients", tools="Tools", time="Time")
+        for rec in self.steps:
+        	act = ''
+        	ing = ''
+        	too = ''
+        	for action in rec['action']:
+        		act += action + ', '
+        	act = act[:-2]
+        	for ingredient in rec['ingredients']:
+        		ing += ingredient + ', '
+        	ing=ing[:-2]
+        	for tool in rec['tools']:
+        		too += tool + ', '
+        	too = too[:-2]
+
+        	print template.format(action=act, ingredients=ing, tools=too, time=rec['time'])
+
+    def printTools(self):
+        for tool in self.tools:
+        	print tool
+
     def getJSON(self):
         ret = {'ingredients': self.getIngredients(), 'cooking method': self.getPrimaryMethod(), 'cooking tools': self.getTools()}
         ret = json.dumps(ret)
